@@ -1,0 +1,918 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f6efe4">
+<title>Percorso professionale</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f6efe4'/%3E%3Cpath d='M5 16h22' stroke='%232c221b' stroke-opacity='.4' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%238f5033'/%3E%3C/svg%3E">
+<!-- Testi dell'anteprima quando il link viene incollato in una mail o in chat. -->
+<meta name="description" content="Formazione ed esperienze cliniche, raccontate in una linea del tempo.">
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Percorso professionale">
+<meta property="og:description" content="Formazione ed esperienze cliniche, raccontate in una linea del tempo.">
+<!-- Immagine dell'anteprima: carica og.png accanto a questo file. Dopo la pubblicazione
+     sostituisci "og.png" con l'indirizzo completo, es. https://sito.it/og.png -->
+<meta property="og:image" content="https://davidesala23.github.io/percorso-professionale/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════
+   CONTENUTI — modifica solo questa sezione.
+   Dopo ogni modifica salva il file e ricarica la pagina nel browser.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+const PROFILO = {
+  nome: "Nome Cognome",
+  ruolo: "Psicologa",
+  intro: "Una sintesi del mio percorso formativo e delle esperienze cliniche che lo hanno accompagnato. Ogni tappa si può aprire per leggere i dettagli.",
+  // Contatti in fondo alla pagina (facoltativi). Lascia "" per non mostrarli.
+  email: "",
+  telefono: "",
+  // Nota in fondo alla pagina. Lasciala: spiega come sono trattati i casi.
+  notaRiservatezza: "I casi sono presentati in forma anonima. Età, tempi e circostanze sono stati modificati o generalizzati per tutelare la riservatezza delle persone seguite."
+};
+
+/* Ogni voce:
+   tipo      → "corso" oppure "caso"
+   anno      → anno di inizio (numero): serve solo per ordinare e raggruppare
+   periodo   → testo libero mostrato in pagina, es. "2021 – 2023" o "Marzo 2024"
+   titolo    → titolo breve
+   contesto  → (facoltativo) ente, sede, oppure ambito del caso
+   sintesi   → una frase che si legge senza aprire la voce
+   sezioni   → (facoltativo) blocchi di dettaglio: { titolo, testo }
+   esempio   → true = segnaposto. Cancella la riga quando inserisci una voce reale.
+
+   CASI: nessun nome, iniziale, età esatta, professione, luogo o data precisa. */
+
+const VOCI = [
+  {
+    tipo: "corso", anno: 2016, periodo: "2016 – 2019", esempio: true,
+    titolo: "Laurea triennale in Scienze e tecniche psicologiche",
+    contesto: "Università degli Studi di [Città]",
+    sintesi: "Le basi: psicologia generale, dello sviluppo, metodologia della ricerca.",
+    sezioni: [
+      { titolo: "Tesi", testo: "[Titolo della tesi e relatore, in una riga.]" },
+      { titolo: "Cosa mi ha lasciato", testo: "[Due o tre frasi su ciò che di questo percorso usi ancora oggi nel lavoro clinico.]" }
+    ]
+  },
+  {
+    tipo: "corso", anno: 2019, periodo: "2019 – 2021", esempio: true,
+    titolo: "Laurea magistrale in Psicologia clinica",
+    contesto: "Università degli Studi di [Città] · 110/110",
+    sintesi: "Approfondimento clinico: psicopatologia, valutazione e colloquio.",
+    sezioni: [
+      { titolo: "Tesi", testo: "[Titolo della tesi, relatore e, se utile, una frase sul risultato principale.]" },
+      { titolo: "Cosa mi ha lasciato", testo: "[Che cosa è cambiato nel tuo modo di guardare la sofferenza psicologica.]" }
+    ]
+  },
+  {
+    tipo: "corso", anno: 2021, periodo: "2021 – 2022", esempio: true,
+    titolo: "Tirocinio professionalizzante post-lauream presso un servizio territoriale di salute mentale per adulti",
+    contesto: "[Nome del servizio] · 1.000 ore",
+    sintesi: "Primo contatto continuativo con l’utenza, in affiancamento all’équipe.",
+    sezioni: [
+      { titolo: "Attività", testo: "[Di che cosa ti sei occupata: osservazione di colloqui, somministrazione di test, partecipazione alle riunioni d’équipe, stesura di relazioni.]" },
+      { titolo: "Cosa ho imparato", testo: "[Un apprendimento concreto. Per esempio: come si lavora in rete con psichiatri, assistenti sociali ed educatori, e che cosa significa tenere insieme punti di vista diversi sullo stesso paziente senza perdere il filo della relazione.]" }
+    ]
+  },
+  {
+    tipo: "corso", anno: 2022, periodo: "2022", esempio: true,
+    titolo: "Abilitazione e iscrizione all’Albo",
+    contesto: "Ordine degli Psicologi di [Regione] · n. [00000]",
+    sintesi: "Esame di Stato e iscrizione alla sezione A dell’Albo."
+  },
+  {
+    tipo: "caso", anno: 2023, periodo: "2023", esempio: true,
+    titolo: "Ansia sociale in un giovane adulto",
+    contesto: "Giovane adulto · percorso individuale · circa 8 mesi",
+    sintesi: "Dall’evitamento delle situazioni di gruppo a una ripresa graduale della vita sociale.",
+    sezioni: [
+      { titolo: "La richiesta", testo: "[Con quale difficoltà è arrivata la persona, in termini generali e non riconoscibili.]" },
+      { titolo: "Il percorso", testo: "[Come si è sviluppato il lavoro: le fasi principali, gli strumenti usati, i momenti di svolta. Niente dettagli biografici: conta il processo, non la storia personale.]" },
+      { titolo: "Cosa ho imparato", testo: "[Che cosa questo percorso ti ha insegnato come professionista. Per esempio: il valore di rispettare i tempi della persona invece di inseguire un obiettivo fissato in anticipo.]" }
+    ]
+  },
+  {
+    tipo: "corso", anno: 2023, periodo: "2023 – in corso", esempio: true,
+    titolo: "Scuola di specializzazione in psicoterapia",
+    contesto: "[Nome della scuola] · indirizzo [orientamento] · [n]° anno",
+    sintesi: "Formazione quadriennale con supervisione clinica continuativa.",
+    sezioni: [
+      { titolo: "Orientamento", testo: "[Il modello teorico della scuola e perché lo hai scelto.]" },
+      { titolo: "Supervisione", testo: "[Come è organizzata e che cosa ti dà nel lavoro con i pazienti.]" }
+    ]
+  },
+  {
+    tipo: "caso", anno: 2024, periodo: "2024", esempio: true,
+    titolo: "Elaborazione di un lutto",
+    contesto: "Persona adulta · percorso individuale · circa 5 mesi",
+    sintesi: "Un lavoro sul dare spazio alla perdita senza esserne travolti.",
+    sezioni: [
+      { titolo: "La richiesta", testo: "[Motivo della consultazione, in forma generale.]" },
+      { titolo: "Il percorso", testo: "[Fasi e passaggi principali.]" },
+      { titolo: "Cosa ho imparato", testo: "[Un apprendimento, anche su di te: per esempio che cosa significa restare presenti davanti al dolore dell’altro senza cercare subito di alleviarlo.]" }
+    ]
+  },
+  {
+    tipo: "caso", anno: 2024, periodo: "2024 – 2025", esempio: true,
+    titolo: "Sostegno alla genitorialità in una fase di separazione",
+    contesto: "Coppia genitoriale · colloqui congiunti e individuali · circa 10 mesi",
+    sintesi: "Riportare l’attenzione sui bisogni dei figli dentro un conflitto ancora aperto.",
+    sezioni: [
+      { titolo: "La richiesta", testo: "[Chi ha chiesto aiuto e per che cosa, senza elementi riconoscibili.]" },
+      { titolo: "Il percorso", testo: "[Come hai impostato il lavoro, quali difficoltà sono emerse, come è cambiata la comunicazione tra i genitori.]" },
+      { titolo: "Cosa ho imparato", testo: "[Per esempio: come mantenere una posizione equidistante quando entrambe le parti chiedono un’alleanza.]" }
+    ]
+  },
+  {
+    tipo: "corso", anno: 2025, periodo: "Marzo 2025", esempio: true,
+    titolo: "Corso di formazione [tecnica o metodo] — primo livello",
+    contesto: "[Ente formatore] · [n] ore",
+    sintesi: "Formazione specifica su [tecnica], con esercitazioni pratiche supervisionate.",
+    sezioni: [
+      { titolo: "Competenze acquisite", testo: "[Che cosa sai fare ora che prima non sapevi fare, e in quali situazioni lo usi.]" }
+    ]
+  }
+];
+
+// Etichette dei due tipi. Cambiale se preferisci altri termini.
+const TIPI = {
+  corso: { voce: "Formazione",   filtro: "Formazione" },
+  caso:  { voce: "Caso clinico", filtro: "Casi clinici" }
+};
+
+/* ═══════════════════════ FINE CONTENUTI ═══════════════════════ */
+</script>
+
+<style>
+:root {
+  --bg:      oklch(0.955 0.016 82);
+  --surface: oklch(0.985 0.008 85);
+  --sunk:    oklch(0.925 0.02 80);
+  --ink:     oklch(0.26 0.02 55);
+  --ink-2:   oklch(0.42 0.022 60);
+  --ink-3:   oklch(0.5 0.022 62);
+  --line:    oklch(0.26 0.02 55 / 0.12);
+  --line-2:  oklch(0.26 0.02 55 / 0.22);
+  --rail:    oklch(0.26 0.02 55 / 0.38);
+  --ink-4:   oklch(0.68 0.018 70);
+  --corso:   oklch(0.5 0.095 45);
+  --caso:    oklch(0.46 0.06 135);
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --t-caption: 0.8125rem;
+  --t-small: 0.875rem;
+  --t-body: 1rem;
+  --t-lead: 1.125rem;
+  --t-title: 1.25rem;
+  --t-head: 1.625rem;
+
+  --ease-out: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--t-body);
+  line-height: 1.55;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, p, ol, ul { margin: 0; padding: 0; }
+ol, ul { list-style: none; }
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: start;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+::selection { background: oklch(0.86 0.05 70); color: var(--ink); }
+
+.page {
+  max-width: 1040px;
+  margin-inline: auto;
+  padding: 72px max(20px, env(safe-area-inset-right)) calc(120px + env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+}
+
+/* ── Intestazione ─────────────────────────────────────────── */
+
+.eyebrow {
+  color: var(--ink-3);
+  font-size: var(--t-caption);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin-top: 12px;
+  font-family: var(--serif);
+  font-size: clamp(2.25rem, 1.6rem + 3vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.intro {
+  max-width: 58ch;
+  margin-top: 20px;
+  color: var(--ink-2);
+  font-size: var(--t-lead);
+  text-wrap: pretty;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  margin-top: 48px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.filtro[hidden] { display: none; }
+.filtro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 6px; /* 8px tra le righe: le aree di tocco da 44px non si sovrappongono */
+}
+
+.filtro button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--ink-2);
+  font-size: var(--t-small);
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background-color 150ms ease-out, color 150ms ease-out, transform 150ms ease-out;
+}
+.filtro button::before { content: ""; position: absolute; inset: -4px 0; }
+.filtro button:active { transform: scale(0.96); }
+.filtro button[aria-pressed="true"] {
+  background: var(--ink);
+  box-shadow: none;
+  color: var(--bg);
+}
+.filtro .n { font-variant-numeric: tabular-nums; color: var(--ink-3); }
+.filtro button[aria-pressed="true"] .n { color: oklch(0.8 0.016 80); }
+
+@media (hover: hover) and (pointer: fine) {
+  .filtro button[aria-pressed="false"]:hover { background: var(--sunk); color: var(--ink); }
+}
+
+#stage { margin-top: 32px; min-height: 60vh; }
+
+.vuoto { padding: 48px 0; color: var(--ink-2); }
+
+.nota {
+  margin-top: 72px;
+  padding-top: 20px;
+  padding-inline-end: max(0px, calc(100% - 65ch));
+  border-top: 1px solid var(--line);
+  color: var(--ink-3);
+  font-size: var(--t-small);
+  text-wrap: pretty;
+}
+
+.contatti {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  margin-top: 72px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.contatti[hidden] { display: none; }
+.contatti a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line-2);
+  text-decoration-thickness: from-font;
+  text-underline-offset: 3px;
+  touch-action: manipulation;
+  overflow-wrap: anywhere;
+  transition: text-decoration-color 150ms ease-out;
+}
+@media (hover: hover) and (pointer: fine) {
+  .contatti a:hover { text-decoration-color: var(--ink); }
+}
+.contatti + .nota { margin-top: 20px; }
+
+/* ── Pezzi condivisi ──────────────────────────────────────── */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink-2);
+  font-size: var(--t-caption);
+  white-space: nowrap;
+}
+.tag::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--tipo);
+}
+[data-tipo="corso"] { --tipo: var(--corso); }
+[data-tipo="caso"]  { --tipo: var(--caso); }
+
+.esempio {
+  padding: 1px 7px;
+  border: 1px dashed var(--line-2);
+  border-radius: 999px;
+  color: var(--ink-3);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.periodo { font-variant-numeric: tabular-nums; }
+
+.sezioni { display: grid; gap: 20px; max-width: 62ch; }
+.sezioni h3 {
+  margin-bottom: 4px;
+  color: var(--ink-3);
+  font-size: var(--t-caption);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.sezioni p { color: var(--ink); overflow-wrap: break-word; }
+.contesto { color: var(--ink-2); font-size: var(--t-small); overflow-wrap: break-word; }
+
+.scheda-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; color: var(--ink-2); font-size: var(--t-caption); }
+.scheda h2 {
+  margin-top: 12px;
+  font-family: var(--serif);
+  font-size: var(--t-head);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+.scheda .contesto { margin-top: 8px; }
+.scheda .sintesi { max-width: 58ch; margin-top: 16px; font-size: var(--t-lead); text-wrap: pretty; }
+.scheda .sezioni { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+
+/* ── Linea del tempo ──────────────────────────────────────── */
+
+.tl { position: relative; display: grid; gap: 44px; padding: 12px 36px 0; }
+
+/* Il raccordo che porta la linea da una riga alla successiva */
+.tl-giro {
+  position: absolute;
+  width: 36px;
+  border: 1px solid var(--rail);
+  pointer-events: none;
+}
+.tl-giro[data-lato="dx"] { right: 0; border-left: 0; border-radius: 0 36px 36px 0; }
+.tl-giro[data-lato="sx"] { left: 0; border-right: 0; border-radius: 36px 0 0 36px; }
+.tl-giro::after, .tl-freccia {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--ink-3);
+  border-top: 0;
+  border-left: 0;
+  pointer-events: none;
+}
+.tl-giro::after { top: 50%; margin-top: -6px; transform: rotate(45deg); }
+.tl-giro[data-lato="dx"]::after { right: -4.5px; }
+.tl-giro[data-lato="sx"]::after { left: -4.5px; }
+.tl-freccia[data-lato="dx"] { right: 36px; transform: rotate(-45deg); }
+.tl-freccia[data-lato="sx"] { left: 36px; transform: rotate(135deg); }
+.tl-capo {
+  position: absolute;
+  left: 31px;
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid var(--ink-3);
+  border-radius: 50%;
+  background: var(--bg);
+  pointer-events: none;
+}
+
+.tl-riga {
+  display: grid;
+  grid-template-columns: repeat(var(--hc), minmax(0, 1fr));
+  grid-template-rows: auto 48px auto;
+}
+.tl-riga::before {
+  content: "";
+  grid-row: 2;
+  grid-column: 1 / -1;
+  align-self: center;
+  height: 1px;
+  background: var(--rail);
+}
+.tl-riga li { display: contents; }
+
+.tl-punto {
+  position: relative;
+  grid-row: 2;
+  justify-self: center;
+  align-self: center;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--tipo);
+  box-shadow: 0 0 0 4px var(--bg);
+  pointer-events: none;
+}
+.tl-punto::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 1px;
+  height: 14px;
+  background: var(--line-2);
+  transform: translateX(-50%);
+}
+.tl-punto[data-lato="su"]::after { bottom: calc(100% + 4px); }
+.tl-punto[data-lato="giu"]::after { top: calc(100% + 4px); }
+
+.fumetto {
+  position: relative;
+  justify-self: center;
+  width: calc(100% - 16px);
+  max-width: 340px;
+  padding: 14px 16px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow:
+    0 1px 1px oklch(0.26 0.02 55 / 0.04),
+    0 2px 4px oklch(0.26 0.02 55 / 0.04),
+    0 8px 20px oklch(0.26 0.02 55 / 0.05);
+  transition: box-shadow 150ms ease-out, border-color 150ms ease-out, transform 150ms ease-out;
+}
+.fumetto { user-select: none; -webkit-user-select: none; }
+.fumetto[data-lato="su"] { grid-row: 1; align-self: end; }
+.fumetto[data-lato="giu"] { grid-row: 3; align-self: start; }
+.fumetto:active { transform: scale(0.98); }
+
+/* La codina del fumetto, rivolta verso il punto sulla linea */
+.fumetto::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 0;
+  border-left: 0;
+  border-bottom-right-radius: 2px;
+  transition: border-color 150ms ease-out;
+}
+.fumetto[data-lato="su"]::after { bottom: -7px; transform: translateX(-50%) rotate(45deg); }
+.fumetto[data-lato="giu"]::after { top: -7px; transform: translateX(-50%) rotate(-135deg); }
+
+@media (hover: hover) and (pointer: fine) {
+  .fumetto:hover, .fumetto:hover::after { border-color: var(--line-2); }
+  .fumetto:hover {
+    box-shadow:
+      0 1px 2px oklch(0.26 0.02 55 / 0.05),
+      0 10px 28px oklch(0.26 0.02 55 / 0.1);
+  }
+  .fumetto:hover .fumetto-apri { color: var(--ink); }
+}
+
+.fumetto-testa { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.fumetto-periodo { color: var(--ink); font-size: var(--t-caption); font-weight: 600; letter-spacing: 0.01em; }
+.fumetto-titolo {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.25;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+.fumetto-sintesi {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  margin-top: 6px;
+  color: var(--ink-2);
+  font-size: var(--t-small);
+  line-height: 1.4;
+  text-wrap: pretty;
+}
+.fumetto-piede { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; }
+.fumetto-apri { color: var(--ink-3); font-size: var(--t-caption); white-space: nowrap; transition: color 150ms ease-out; }
+
+/* Telefono: la linea diventa verticale, i fumetti stanno a destra */
+.tl-vert { position: relative; display: grid; gap: 16px; }
+.tl-vert::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 5px;
+  width: 1px;
+  background: var(--rail);
+}
+.tl-vert li { display: grid; grid-template-columns: 11px minmax(0, 1fr); column-gap: 18px; align-items: start; }
+.tl-vert .tl-punto { grid-row: auto; align-self: start; margin-top: 22px; }
+.tl-vert .tl-punto::after { display: none; }
+.tl-vert .fumetto { width: 100%; max-width: none; }
+.tl-vert .fumetto::after { left: -7px; top: 21px; transform: rotate(135deg); }
+
+/* ── Popup di approfondimento ─────────────────────────────── */
+
+html:has(dialog[open]) { overflow: hidden; }
+
+dialog {
+  width: min(640px, calc(100vw - 32px));
+  max-height: min(86dvh, 780px);
+  padding: 0;
+  border: 0;
+  border-radius: 18px;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow:
+    0 0 0 1px var(--line),
+    0 4px 12px oklch(0.26 0.02 55 / 0.08),
+    0 24px 64px oklch(0.26 0.02 55 / 0.18);
+  opacity: 0;
+  transform: scale(0.96);
+  transition:
+    opacity 160ms ease-in,
+    transform 160ms ease-in,
+    overlay 160ms allow-discrete,
+    display 160ms allow-discrete;
+}
+dialog[open] {
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 220ms ease-out,
+    transform 240ms var(--ease-out),
+    overlay 220ms allow-discrete,
+    display 220ms allow-discrete;
+}
+@starting-style { dialog[open] { opacity: 0; transform: scale(0.96); } }
+
+dialog::backdrop {
+  background: oklch(0.26 0.02 55 / 0);
+  transition: background-color 160ms ease-in, overlay 160ms allow-discrete, display 160ms allow-discrete;
+}
+dialog[open]::backdrop { background: oklch(0.26 0.02 55 / 0.38); transition-duration: 220ms; transition-timing-function: ease-out; }
+@starting-style { dialog[open]::backdrop { background: oklch(0.26 0.02 55 / 0); } }
+
+.popup-corpo { flex: 1; min-height: 0; overflow-y: auto; padding: 36px 36px 28px; overscroll-behavior: contain; }
+.popup-corpo:focus { outline: none; }
+.popup-corpo .scheda-meta { padding-inline-end: 44px; }
+
+.popup-chiudi {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink-2);
+  transition: background-color 150ms ease-out, color 150ms ease-out, transform 150ms ease-out;
+}
+.popup-chiudi svg { width: 18px; height: 18px; }
+.popup-chiudi:active { transform: scale(0.96); }
+
+.popup-passi {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 22px calc(8px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  color: var(--ink-3);
+  font-size: var(--t-small);
+  font-variant-numeric: tabular-nums;
+}
+.popup-passi button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  color: var(--ink);
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background-color 150ms ease-out, transform 150ms ease-out;
+}
+.popup-passi button:not(:disabled):active { transform: scale(0.96); }
+.popup-passi button:disabled { color: var(--ink-4); cursor: default; }
+
+@media (hover: hover) and (pointer: fine) {
+  .popup-chiudi:hover { background: var(--sunk); color: var(--ink); }
+  .popup-passi button:not(:disabled):hover { background: var(--sunk); }
+}
+
+@media (max-width: 640px) {
+  .page { padding-top: 48px; }
+  .popup-corpo { padding: 28px 22px 24px; }
+}
+
+/* Movimento ridotto: restano dissolvenze e colori, spariscono scala e spostamenti. */
+@media (prefers-reduced-motion: reduce) {
+  dialog, dialog[open] { transform: none; }
+  @starting-style { dialog[open] { transform: none; } }
+  .fumetto:active,
+  .filtro button:active,
+  .popup-chiudi:active,
+  .popup-passi button:not(:disabled):active { transform: none; }
+}
+
+.completo { display: none; }
+
+@media print {
+  .toolbar, #stage, dialog { display: none !important; }
+  body { background: none; }
+  .page { padding: 0; max-width: none; }
+  .completo { display: grid; gap: 32px; margin-top: 32px; }
+  .completo .scheda { break-inside: avoid; padding-top: 24px; border-top: 1px solid var(--line); }
+  .nota { margin-top: 40px; }
+}
+</style>
+</head>
+
+<body>
+<noscript><p style="max-width:40rem;margin:48px auto;padding:0 20px">Per vedere il percorso serve JavaScript: apri questo file in un browser (Chrome, Safari, Firefox o Edge).</p></noscript>
+<main class="page">
+  <header>
+    <p class="eyebrow" id="ruolo"></p>
+    <h1 id="nome"></h1>
+    <p class="intro" id="intro"></p>
+    <div class="toolbar">
+      <div class="filtro" id="filtro" role="group" aria-label="Filtra per tipo"></div>
+    </div>
+  </header>
+
+  <div id="stage"></div>
+
+  <!-- Tutte le schede per esteso: nascoste a schermo, usate in stampa e nel PDF. -->
+  <div class="completo" id="completo"></div>
+
+  <p class="contatti" id="contatti" hidden></p>
+
+  <p class="nota" id="nota"></p>
+</main>
+
+<dialog id="popup" aria-labelledby="popup-titolo">
+  <button type="button" class="popup-chiudi" aria-label="Chiudi">
+    <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 4l10 10M14 4L4 14"/></svg>
+  </button>
+  <div class="popup-corpo" id="popup-corpo" tabindex="-1" autofocus></div>
+  <div class="popup-passi">
+    <button type="button" data-passo="-1">← Precedente</button>
+    <span id="popup-conta" aria-live="polite"></span>
+    <button type="button" data-passo="1">Successiva →</button>
+  </div>
+</dialog>
+
+<script>
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const voci = VOCI.map((v, i) => ({ ...v, id: i }));
+const crescente = [...voci].sort((a, b) => (a.anno || 0) - (b.anno || 0) || a.id - b.id);
+const perId = (id) => voci[id];
+
+const S = { filtro: "tutti", sel: null };
+const visibili = (lista) => lista.filter((v) => S.filtro === "tutti" || v.tipo === S.filtro);
+const senzaMoto = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+const mqTelefono = matchMedia("(max-width: 679px)");
+const mqMedio = matchMedia("(max-width: 959px)");
+
+/* ── Intestazione ── */
+document.title = `${PROFILO.nome} — Percorso professionale`;
+document.getElementById("ruolo").textContent = `${PROFILO.ruolo} · Percorso professionale`;
+document.getElementById("nome").textContent = PROFILO.nome;
+document.getElementById("intro").textContent = PROFILO.intro;
+document.getElementById("nota").textContent = PROFILO.notaRiservatezza;
+{
+  const c = document.getElementById("contatti");
+  const righe = [];
+  if (PROFILO.email) righe.push(`<a href="mailto:${esc(PROFILO.email)}">${esc(PROFILO.email)}</a>`);
+  if (PROFILO.telefono) righe.push(`<a href="tel:${esc(PROFILO.telefono.replace(/[^+\d]/g, ""))}">${esc(PROFILO.telefono)}</a>`);
+  c.innerHTML = righe.join("");
+  c.hidden = !righe.length;
+}
+
+const filtroEl = document.getElementById("filtro");
+function disegnaFiltro() {
+  const opz = [["tutti", "Tutto", voci.length]];
+  for (const t of Object.keys(TIPI)) {
+    const n = voci.filter((v) => v.tipo === t).length;
+    if (n) opz.push([t, TIPI[t].filtro, n]);
+  }
+  filtroEl.hidden = opz.length < 3; // un solo tipo: il filtro non serve
+  filtroEl.innerHTML = opz.map(([k, nome, n]) =>
+    `<button type="button" data-filtro="${k}" aria-pressed="${S.filtro === k}">${esc(nome)} <span class="n">${n}</span></button>`
+  ).join("");
+}
+filtroEl.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-filtro]");
+  if (!b) return;
+  S.filtro = b.dataset.filtro;
+  filtroEl.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b));
+  ridisegna();
+});
+disegnaFiltro();
+
+/* ── Pezzi condivisi ── */
+const tag = (v) => `<span class="tag">${esc(TIPI[v.tipo].voce)}</span>`;
+const esempio = (v) => (v.esempio ? `<span class="esempio">Esempio</span>` : "");
+const sezioni = (v) => (v.sezioni?.length
+  ? `<div class="sezioni">${v.sezioni.map((s) => `<section><h3>${esc(s.titolo)}</h3><p>${esc(s.testo)}</p></section>`).join("")}</div>`
+  : "");
+const scheda = (v) => `
+  <article class="scheda" data-tipo="${v.tipo}">
+    <p class="scheda-meta">${tag(v)}<span class="periodo">${esc(v.periodo)}</span>${esempio(v)}</p>
+    <h2 id="popup-titolo">${esc(v.titolo)}</h2>
+    ${v.contesto ? `<p class="contesto">${esc(v.contesto)}</p>` : ""}
+    <p class="sintesi">${esc(v.sintesi)}</p>
+    ${sezioni(v)}
+  </article>`;
+const vuoto = `<p class="vuoto">Nessuna voce in questa categoria.</p>`;
+
+function entra(el) {
+  if (!el || senzaMoto()) return;
+  el.animate(
+    [{ opacity: 0, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }],
+    { duration: 220, easing: "cubic-bezier(0.32, 0.72, 0, 1)" }
+  );
+}
+
+/* ── Linea del tempo ── */
+const stage = document.getElementById("stage");
+
+const fumetto = (v, lato, stile) => `
+  <button type="button" class="fumetto" data-voce="${v.id}" data-tipo="${v.tipo}" ${lato ? `data-lato="${lato}" style="${stile}"` : ""} aria-haspopup="dialog">
+    <span class="fumetto-testa"><span class="fumetto-periodo periodo">${esc(v.periodo)}</span>${esempio(v)}</span>
+    <span class="fumetto-titolo">${esc(v.titolo)}</span>
+    <span class="fumetto-sintesi">${esc(v.sintesi)}</span>
+    <span class="fumetto-piede">${tag(v)}<span class="fumetto-apri">Approfondisci →</span></span>
+  </button>`;
+
+function ridisegna() {
+  const lista = visibili(crescente);
+  if (!lista.length) { stage.innerHTML = vuoto; return; }
+
+  // Telefono: linea verticale
+  if (mqTelefono.matches) {
+    stage.innerHTML = `<ol class="tl-vert">${lista.map((v) =>
+      `<li><span class="tl-punto" data-tipo="${v.tipo}" aria-hidden="true"></span>${fumetto(v)}</li>`).join("")}</ol>`;
+    return;
+  }
+
+  // Schermi larghi: linea orizzontale fissa, fumetti alternati sopra e sotto.
+  // Se le tappe sono tante, la linea va a capo su più righe bilanciate.
+  const max = mqMedio.matches ? 3 : 5;
+  const nRighe = Math.ceil(lista.length / max);
+  const perRiga = Math.ceil(lista.length / nRighe);
+  let html = "";
+  for (let r = 0; r < nRighe; r++) {
+    const riga = lista.slice(r * perRiga, (r + 1) * perRiga);
+    html += `<ol class="tl-riga" style="--hc:${perRiga * 2 + 2}">${riga.map((v, i) => {
+      const lato = (r * perRiga + i) % 2 ? "giu" : "su";
+      // Le righe pari vanno da sinistra a destra, le dispari tornano indietro:
+      // così la linea è una sola, a serpentina.
+      const c = r % 2 ? (perRiga - 1 - i) * 2 + 1 : i * 2 + 1;
+      return `<li>
+        ${fumetto(v, lato, `grid-column:${c} / span 4`)}
+        <span class="tl-punto" data-tipo="${v.tipo}" data-lato="${lato}" style="grid-column:${c + 1} / span 2" aria-hidden="true"></span>
+      </li>`;
+    }).join("")}</ol>`;
+  }
+  stage.innerHTML = `<div class="tl">${html}</div>`;
+  collega();
+}
+
+// Disegna i raccordi tra le righe, il punto d'inizio e la freccia finale.
+function collega() {
+  const tl = stage.querySelector(".tl");
+  if (!tl) return;
+  tl.querySelectorAll(".tl-giro, .tl-capo, .tl-freccia").forEach((el) => el.remove());
+  const base = tl.getBoundingClientRect();
+  const ys = [...tl.querySelectorAll(".tl-riga")].map((riga) => {
+    const p = riga.querySelector(".tl-punto").getBoundingClientRect();
+    return p.top + p.height / 2 - base.top;
+  });
+  const metti = (classe, lato, top, altezza) => {
+    const el = document.createElement("span");
+    el.className = classe;
+    el.setAttribute("aria-hidden", "true");
+    if (lato) el.dataset.lato = lato;
+    el.style.top = top + "px";
+    if (altezza) el.style.height = altezza + "px";
+    tl.append(el);
+  };
+  for (let i = 0; i < ys.length - 1; i++)
+    metti("tl-giro", i % 2 ? "sx" : "dx", ys[i] - 0.5, ys[i + 1] - ys[i] + 1);
+  metti("tl-capo", "", ys[0] - 5);
+  const ultima = ys.length - 1;
+  metti("tl-freccia", ultima % 2 ? "sx" : "dx", ys[ultima] - 4);
+}
+new ResizeObserver(collega).observe(stage);
+
+mqTelefono.addEventListener("change", ridisegna);
+mqMedio.addEventListener("change", ridisegna);
+
+/* ── Popup ── */
+const popup = document.getElementById("popup");
+const popupCorpo = document.getElementById("popup-corpo");
+
+function mostraVoce(id, animata) {
+  const lista = visibili(crescente);
+  const i = lista.findIndex((v) => v.id === id);
+  if (i < 0) return;
+  S.sel = id;
+  popupCorpo.innerHTML = scheda(lista[i]);
+  popupCorpo.scrollTop = 0;
+  document.getElementById("popup-conta").textContent = `${i + 1} di ${lista.length}`;
+  popup.querySelector('[data-passo="-1"]').disabled = i === 0;
+  popup.querySelector('[data-passo="1"]').disabled = i === lista.length - 1;
+  if (animata) entra(popupCorpo.firstElementChild);
+}
+
+stage.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-voce]");
+  if (!b) return;
+  mostraVoce(+b.dataset.voce, false);
+  popup.showModal();
+});
+
+// Il clic sullo sfondo chiude solo se è iniziato sullo sfondo: così una
+// selezione di testo trascinata fuori dal popup non lo chiude per errore.
+let premutoSuSfondo = false;
+popup.addEventListener("pointerdown", (e) => { premutoSuSfondo = e.target === popup; });
+popup.addEventListener("click", (e) => {
+  if ((e.target === popup && premutoSuSfondo) || e.target.closest(".popup-chiudi")) { popup.close(); return; }
+  const passo = e.target.closest("[data-passo]");
+  if (!passo) return;
+  vaiA(+passo.dataset.passo, true);
+  // A fine corsa il pulsante si disabilita: il focus torna alla scheda.
+  if (passo.disabled) popupCorpo.focus();
+});
+function vaiA(d, animata) {
+  const lista = visibili(crescente);
+  const i = lista.findIndex((v) => v.id === S.sel) + d;
+  if (i >= 0 && i < lista.length) mostraVoce(lista[i].id, animata);
+}
+// Frecce della tastiera: scheda precedente / successiva, senza animazione.
+popup.addEventListener("keydown", (e) => {
+  if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
+  if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+  e.preventDefault();
+  vaiA(e.key === "ArrowLeft" ? -1 : 1, false);
+  if (document.activeElement?.disabled) popupCorpo.focus();
+});
+
+document.getElementById("completo").innerHTML =
+  crescente.map((v) => scheda(v).replace(' id="popup-titolo"', "")).join("");
+
+ridisegna();
+</script>
+</body>
+</html>
