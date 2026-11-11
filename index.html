@@ -566,6 +566,9 @@ dialog {
   border-radius: 18px;
   background: var(--surface);
   color: var(--ink);
+  /* Qui e non su [open]: in chiusura il popup resta visibile per 160ms senza
+     l'attributo open, e senza questa riga l'impaginazione passerebbe in orizzontale. */
+  flex-direction: column;
   box-shadow:
     0 0 0 1px var(--line),
     0 4px 12px oklch(0.26 0.02 55 / 0.08),
@@ -580,7 +583,6 @@ dialog {
 }
 dialog[open] {
   display: flex;
-  flex-direction: column;
   opacity: 1;
   transform: none;
   transition:
