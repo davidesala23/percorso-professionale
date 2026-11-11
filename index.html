@@ -401,7 +401,7 @@ h1 {
 }
 .tl-giro[data-lato="dx"] { right: 0; border-left: 0; border-radius: 0 36px 36px 0; }
 .tl-giro[data-lato="sx"] { left: 0; border-right: 0; border-radius: 36px 0 0 36px; }
-.tl-giro::after, .tl-freccia {
+.tl-giro::after, .tl-freccia, .tl-verso {
   content: "";
   position: absolute;
   width: 8px;
@@ -411,11 +411,14 @@ h1 {
   border-left: 0;
   pointer-events: none;
 }
-.tl-giro::after { top: 50%; margin-top: -6px; transform: rotate(45deg); }
+/* In alto, subito dopo la curva: si vede senza scorrere */
+.tl-giro::after { top: 64px; transform: rotate(45deg); }
 .tl-giro[data-lato="dx"]::after { right: -4.5px; }
 .tl-giro[data-lato="sx"]::after { left: -4.5px; }
 .tl-freccia[data-lato="dx"] { right: 36px; transform: rotate(-45deg); }
 .tl-freccia[data-lato="sx"] { left: 36px; transform: rotate(135deg); }
+.tl-verso[data-lato="dx"] { transform: rotate(-45deg); }
+.tl-verso[data-lato="sx"] { transform: rotate(135deg); }
 .tl-capo {
   position: absolute;
   left: 31px;
@@ -835,10 +838,12 @@ function ridisegna() {
 function collega() {
   const tl = stage.querySelector(".tl");
   if (!tl) return;
-  tl.querySelectorAll(".tl-giro, .tl-capo, .tl-freccia").forEach((el) => el.remove());
+  tl.querySelectorAll(".tl-giro, .tl-capo, .tl-freccia, .tl-verso").forEach((el) => el.remove());
   const base = tl.getBoundingClientRect();
+  const xs = [];
   const ys = [...tl.querySelectorAll(".tl-riga")].map((riga) => {
     const p = riga.querySelector(".tl-punto").getBoundingClientRect();
+    xs.push(p.left + p.width / 2 - base.left);
     return p.top + p.height / 2 - base.top;
   });
   const metti = (classe, lato, top, altezza) => {
@@ -853,6 +858,12 @@ function collega() {
   for (let i = 0; i < ys.length - 1; i++)
     metti("tl-giro", i % 2 ? "sx" : "dx", ys[i] - 0.5, ys[i + 1] - ys[i] + 1);
   metti("tl-capo", "", ys[0] - 5);
+  // Una freccia di direzione sul tratto che porta alla prima tappa di ogni riga.
+  ys.forEach((y, i) => {
+    const da = i === 0 ? 36 : i % 2 ? base.width : 0;
+    metti("tl-verso", i % 2 ? "sx" : "dx", y - 4);
+    tl.lastElementChild.style.left = (da + xs[i]) / 2 - 4 + "px";
+  });
   const ultima = ys.length - 1;
   metti("tl-freccia", ultima % 2 ? "sx" : "dx", ys[ultima] - 4);
 }
